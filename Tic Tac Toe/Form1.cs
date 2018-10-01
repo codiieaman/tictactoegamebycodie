@@ -196,7 +196,8 @@ namespace Tic_Tac_Toe
                 }
                 Reset();
             }
-            else
+            
+            else if (b[2].Text == b[4].Text && b[4].Text == b[6].Text && b[2].Text != "")
             {
                 MessageBox.Show(_grid[2].Text + " Wins");
                 if (_grid[2].Text == "X")
@@ -210,6 +211,11 @@ namespace Tic_Tac_Toe
                     label4.Text = yWins.ToString();
                 }
                 Reset();
+            }
+            
+            else 
+            {
+                MessageBox.Show("Draw"); 
             }
             #endregion
         }

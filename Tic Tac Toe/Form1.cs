@@ -1,39 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Tic_Tac_Toe
 {
     public partial class Form1 : Form
     {
-       
         // here we define variables
         int xWins = 0;
         int yWins = 0;
         int d = 0;
-        Button[] b = new Button[9];
+        Button[] _grid = new Button[9];
      
         public Form1()
         {
             InitializeComponent();
         }
 
-       //Here form will be loaded like a program load in to memory
+       //Here the form will be loaded
         private void Form1_Load(object sender, EventArgs e)
         {
             for (int i = 0; i < 9; i++)
             {
-                b[i] = new Button();
-                b[i].Width = 100;
-                b[i].Height = 100;
-                b[i].Click += new EventHandler(Form1_Click);
+                _grid[i] = new Button
+                {
+                    Width = 100,
+                    Height = 100
+                };
+                _grid[i].Click += new EventHandler(Form1_Click);
                 
-                flowLayoutPanel1.Controls.Add(b[i]);
+                flowLayoutPanel1.Controls.Add(_grid[i]);
             }
 
         }
@@ -41,14 +36,14 @@ namespace Tic_Tac_Toe
         int flag = 0;
         int draw = 0;
         /// <summary>
-        /// Reset is function who clear the board.
+        /// Reset is the method to clear the board.
         /// </summary>
-        void reset()
+        void Reset()
         {
             for (int i = 0; i < 9; i++)
             {
-                b[i].Enabled = true;
-                b[i].Text = "";
+                _grid[i].Enabled = true;
+                _grid[i].Text = "";
                 draw = 0;
             }
         }
@@ -61,7 +56,6 @@ namespace Tic_Tac_Toe
                 bt.Text = "X";
                 label10.Text = "O";
                 flag = 1;
-                
             }
             else
             {
@@ -74,23 +68,24 @@ namespace Tic_Tac_Toe
             draw++;
 
             //call check funtion for conditions
-            check();
+            Check();
             if (draw == 9)
             {
                 MessageBox.Show("Game Draw");
                 d++;
                 label6.Text = d.ToString();
-                reset();
+                Reset();
             }
         }
 
-        void check() // Here is the check() function in which conditions will full fill.
+        void Check() // This method will check certain conditions
         {
-            //FOr Rows
-            if (b[0].Text == b[1].Text && b[1].Text == b[2].Text && b[0].Text!="")
+            #region Rows
+            //For Rows
+            if (_grid[0].Text == _grid[1].Text && _grid[1].Text == _grid[2].Text && _grid[0].Text != "")
             {
-                MessageBox.Show(b[0].Text + " Wins");
-                if (b[0].Text == "X")
+                MessageBox.Show(_grid[0].Text + " Wins");
+                if (_grid[0].Text == "X")
                 {
                     xWins++;
                     label3.Text = xWins.ToString();
@@ -101,12 +96,12 @@ namespace Tic_Tac_Toe
                     label4.Text = yWins.ToString();
                 }
 
-                reset();
+                Reset();
             }
-            if (b[3].Text == b[4].Text && b[4].Text == b[5].Text && b[3].Text != "")
+            else if (_grid[3].Text == _grid[4].Text && _grid[4].Text == _grid[5].Text && _grid[3].Text != "")
             {
-                MessageBox.Show(b[3].Text + " Wins");
-                if (b[3].Text == "X")
+                MessageBox.Show(_grid[3].Text + " Wins");
+                if (_grid[3].Text == "X")
                 {
                     xWins++;
                     label3.Text = xWins.ToString();
@@ -116,12 +111,12 @@ namespace Tic_Tac_Toe
                     yWins++;
                     label4.Text = yWins.ToString();
                 }
-                reset();
+                Reset();
             }
-            if (b[6].Text == b[7].Text && b[7].Text == b[8].Text && b[6].Text != "")
+            else if (_grid[6].Text == _grid[7].Text && _grid[7].Text == _grid[8].Text && _grid[6].Text != "")
             {
-                MessageBox.Show(b[6].Text + " Wins");
-                if (b[6].Text == "X")
+                MessageBox.Show(_grid[6].Text + " Wins");
+                if (_grid[6].Text == "X")
                 {
                     xWins++;
                     label3.Text = xWins.ToString();
@@ -131,92 +126,92 @@ namespace Tic_Tac_Toe
                     yWins++;
                     label4.Text = yWins.ToString();
                 }
-                reset();
+                Reset();
             }
-            
-            //For Coloums
-            if (b[0].Text == b[3].Text && b[3].Text == b[6].Text && b[0].Text != "")
-            {
-                MessageBox.Show(b[0].Text + " Wins");
-                if (b[0].Text == "X")
-                {
-                    xWins++;
-                    label3.Text = xWins.ToString();
-                }
-                else
-                {
-                    yWins++;
-                    label4.Text = yWins.ToString();
-                }
-                reset();
-            }
-            if (b[1].Text == b[4].Text && b[4].Text == b[7].Text && b[1].Text != "")
-            {
-                MessageBox.Show(b[1].Text + " Wins");
-                if (b[1].Text == "X")
-                {
-                    xWins++;
-                    label3.Text = xWins.ToString();
-                }
-                else
-                {
-                    yWins++;
-                    label4.Text = yWins.ToString();
-                }
-                reset();
-            }
-            if (b[2].Text == b[5].Text && b[5].Text == b[8].Text && b[2].Text != "")
-            {
-                MessageBox.Show(b[2].Text + " Wins");
-                if (b[2].Text == "X")
-                {
-                    xWins++;
-                    label3.Text = xWins.ToString();
-                }
-                else
-                {
-                    yWins++;
-                    label4.Text = yWins.ToString();
-                }
-                reset();
-            }
-        
-            //For Diagnols
-            if (b[0].Text == b[4].Text && b[4].Text == b[8].Text && b[0].Text != "")
-            {
-                MessageBox.Show(b[0].Text + " Wins");
-                if (b[0].Text == "X")
-                {
-                    xWins++;
-                    label3.Text = xWins.ToString();
-                }
-                else
-                {
-                    yWins++;
-                    label4.Text = yWins.ToString();
-                }
-                reset();
-            }
-            if (b[2].Text == b[4].Text && b[4].Text == b[6].Text && b[2].Text != "")
-            {
-                MessageBox.Show(b[2].Text + " Wins");
-                if (b[2].Text == "X")
-                {
-                    xWins++;
-                    label3.Text = xWins.ToString();
-                }
-                else
-                {
-                    yWins++;
-                    label4.Text = yWins.ToString();
-                }
-                reset();
-            }
-        }
+            #endregion
 
-        private void label8_Click(object sender, EventArgs e)
-        {
+            #region Columns
+            //For Columns
+            else if (_grid[0].Text == _grid[3].Text && _grid[3].Text == _grid[6].Text && _grid[0].Text != "")
+            {
+                MessageBox.Show(_grid[0].Text + " Wins");
+                if (_grid[0].Text == "X")
+                {
+                    xWins++;
+                    label3.Text = xWins.ToString();
+                }
+                else
+                {
+                    yWins++;
+                    label4.Text = yWins.ToString();
+                }
+                Reset();
+            }
+            else if (_grid[1].Text == _grid[4].Text && _grid[4].Text == _grid[7].Text && _grid[1].Text != "")
+            {
+                MessageBox.Show(_grid[1].Text + " Wins");
+                if (_grid[1].Text == "X")
+                {
+                    xWins++;
+                    label3.Text = xWins.ToString();
+                }
+                else
+                {
+                    yWins++;
+                    label4.Text = yWins.ToString();
+                }
+                Reset();
+            }
+            else if (_grid[2].Text == _grid[5].Text && _grid[5].Text == _grid[8].Text && _grid[2].Text != "")
+            {
+                MessageBox.Show(_grid[2].Text + " Wins");
+                if (_grid[2].Text == "X")
+                {
+                    xWins++;
+                    label3.Text = xWins.ToString();
+                }
+                else
+                {
+                    yWins++;
+                    label4.Text = yWins.ToString();
+                }
+                Reset();
+            }
+            #endregion
 
+            #region Diagonals
+            //For Diagonals
+            else if (_grid[0].Text == _grid[4].Text && _grid[4].Text == _grid[8].Text && _grid[0].Text != "")
+            {
+                MessageBox.Show(_grid[0].Text + " Wins");
+                if (_grid[0].Text == "X")
+                {
+                    xWins++;
+                    label3.Text = xWins.ToString();
+                }
+                else
+                {
+                    yWins++;
+                    label4.Text = yWins.ToString();
+                }
+                Reset();
+            }
+            else
+            {
+                MessageBox.Show(_grid[2].Text + " Wins");
+                if (_grid[2].Text == "X")
+                {
+                    xWins++;
+                    label3.Text = xWins.ToString();
+                }
+                else
+                {
+                    yWins++;
+                    label4.Text = yWins.ToString();
+                }
+                Reset();
+            }
+            #endregion
         }
     }
 
